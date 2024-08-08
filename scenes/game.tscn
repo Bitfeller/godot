@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://uv106fnuygie"]
+[gd_scene load_steps=9 format=3 uid="uid://uv106fnuygie"]
 
 [ext_resource type="PackedScene" uid="uid://cqdtoyx87f5yh" path="res://scenes/player.tscn" id="2_e5cbl"]
+[ext_resource type="PackedScene" uid="uid://b71utmvkkjuka" path="res://scenes/gui.tscn" id="2_lakh3"]
+[ext_resource type="Script" path="res://scenes/Game Manager.gd" id="2_t2pnd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hx6ry"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -14,11 +16,10 @@ background_mode = 2
 sky = SubResource("Sky_mbo6e")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dc7b"]
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.1
 
 [sub_resource type="BoxMesh" id="BoxMesh_v1ch6"]
-material = SubResource("StandardMaterial3D_8dc7b")
 size = Vector3(20, 0.5, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hvjg2"]
@@ -26,21 +27,34 @@ data = PackedVector3Array(-10, 0.25, 10, 10, 0.25, 10, -10, -0.25, 10, 10, 0.25,
 
 [node name="Game" type="Node3D"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="GUI" parent="." instance=ExtResource("2_lakh3")]
+
+[node name="Game Manager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_t2pnd")
+
+[node name="Enviroment" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Enviroment"]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Enviroment"]
 environment = SubResource("Environment_a2al5")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Entities" type="Node" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("2_e5cbl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75864, 0)
+
+[node name="Models" type="Node" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Models"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.241362, 0)
 mesh = SubResource("BoxMesh_v1ch6")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Models/MeshInstance3D"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Models/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_hvjg2")
-
-[node name="Player" parent="." instance=ExtResource("2_e5cbl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75864, 0)

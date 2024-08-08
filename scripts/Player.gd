@@ -17,14 +17,16 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 func _process(delta):
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	elif Input.is_action_just_pressed("ui_cancel") and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		# modify accumulated mouse rotation
-		rot_x += - event.relative.x * LOOKAROUND_SPEED
-		rot_y += - event.relative.y * LOOKAROUND_SPEED
+		rot_x -= event.relative.x * LOOKAROUND_SPEED
+		rot_y -= event.relative.y * LOOKAROUND_SPEED
 		transform.basis = Basis() # reset rotation
 		rotate_object_local(Vector3(0, 1, 0), rot_x) # first rotate in Y
 		rotate_object_local(Vector3(1, 0, 0), rot_y) # then rotate in X

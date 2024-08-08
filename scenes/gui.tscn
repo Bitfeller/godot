@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://b71utmvkkjuka"]
+
+[ext_resource type="Texture2D" uid="uid://qonvomv1xq3c" path="res://assets/eye.svg" id="1_5nupk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t1juo"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = -118.0
+offset_right = 482.0
+offset_bottom = -5.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_t1juo")
+
+[node name="ProgressBar" type="ProgressBar" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -185.0
+offset_right = 238.0
+offset_bottom = 27.0
+grow_horizontal = 2
+value = 36.03
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+offset_right = 47.0
+offset_bottom = 23.0
+text = "Sprint"
+
+[node name="ProgressBar2" type="ProgressBar" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -209.0
+offset_top = -26.0
+offset_right = 237.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 36.03
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_right = 24.0
+grow_vertical = 0
+texture = ExtResource("1_5nupk")
