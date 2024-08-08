@@ -39,7 +39,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	var speed = SPRINT_SPEED if Input.is_action_pressed("Shift") else SPEED
+	var speed = SPRINT_SPEED if Input.is_action_pressed("Sprint") else SPEED
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
