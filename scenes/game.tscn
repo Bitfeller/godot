@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://uv106fnuygie"]
+[gd_scene load_steps=11 format=3 uid="uid://uv106fnuygie"]
 
+[ext_resource type="Script" path="res://scripts/Game Manager.gd" id="2_1e8ic"]
 [ext_resource type="PackedScene" uid="uid://cqdtoyx87f5yh" path="res://scenes/player.tscn" id="2_e5cbl"]
 [ext_resource type="PackedScene" uid="uid://b71utmvkkjuka" path="res://scenes/gui.tscn" id="2_lakh3"]
-[ext_resource type="Script" path="res://scenes/Game Manager.gd" id="2_t2pnd"]
 [ext_resource type="PackedScene" uid="uid://dd1l0nuoxlfxe" path="res://scenes/kill_zone.tscn" id="4_11mjf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hx6ry"]
@@ -35,7 +35,7 @@ data = PackedVector3Array(-10, 0.25, 10, 10, 0.25, 10, -10, -0.25, 10, 10, 0.25,
 
 [node name="Game Manager" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("2_t2pnd")
+script = ExtResource("2_1e8ic")
 
 [node name="Enviroment" type="Node" parent="."]
 
