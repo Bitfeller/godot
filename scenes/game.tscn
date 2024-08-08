@@ -2,7 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cqdtoyx87f5yh" path="res://scenes/player.tscn" id="2_e5cbl"]
 [ext_resource type="PackedScene" uid="uid://b71utmvkkjuka" path="res://scenes/gui.tscn" id="2_lakh3"]
-[ext_resource type="Script" path="res://scripts/Game Manager.gd" id="2_t2pnd"]
+[ext_resource type="Script" path="res://scenes/Game Manager.gd" id="2_t2pnd"]
+[ext_resource type="PackedScene" uid="uid://dd1l0nuoxlfxe" path="res://scenes/kill_zone.tscn" id="4_11mjf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hx6ry"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -39,7 +40,8 @@ script = ExtResource("2_t2pnd")
 [node name="Enviroment" type="Node" parent="."]
 
 [node name="Sun" type="DirectionalLight3D" parent="Enviroment"]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 9.10533, 0)
+light_color = Color(0.873298, 0.873298, 0.873298, 1)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Enviroment"]
@@ -61,3 +63,6 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Models/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_hvjg2")
+
+[node name="Kill Zone" parent="Models" instance=ExtResource("4_11mjf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20667, 0)
