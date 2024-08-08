@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://uv106fnuygie"]
+[gd_scene load_steps=10 format=3 uid="uid://uv106fnuygie"]
 
 [ext_resource type="PackedScene" uid="uid://cqdtoyx87f5yh" path="res://scenes/player.tscn" id="2_e5cbl"]
 [ext_resource type="PackedScene" uid="uid://b71utmvkkjuka" path="res://scenes/gui.tscn" id="2_lakh3"]
-[ext_resource type="Script" path="res://scenes/Game Manager.gd" id="2_t2pnd"]
+[ext_resource type="Script" path="res://scripts/Game Manager.gd" id="2_t2pnd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hx6ry"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -19,7 +19,10 @@ glow_enabled = true
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dc7b"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_v1ch6"]
+material = SubResource("StandardMaterial3D_8dc7b")
 size = Vector3(20, 0.5, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hvjg2"]
@@ -35,7 +38,7 @@ script = ExtResource("2_t2pnd")
 
 [node name="Enviroment" type="Node" parent="."]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Enviroment"]
+[node name="Sun" type="DirectionalLight3D" parent="Enviroment"]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
