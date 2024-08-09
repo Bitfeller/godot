@@ -174,9 +174,3 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
-	
-	for idx in get_slide_collision_count():
-		var coll = get_slide_collision(idx)
-		var body = coll.get_collider()
-		if body.get_parent().name == "barrels":
-			body.linear_velocity = direction * (500 if Input.is_action_pressed("Sprint") else 50)

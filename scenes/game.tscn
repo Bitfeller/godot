@@ -68,7 +68,5 @@ shape = SubResource("ConcavePolygonShape3D_hvjg2")
 [node name="Kill Zone" parent="Models" instance=ExtResource("4_11mjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.949821, -0.831957, -3.68465)
 
-[node name="barrels" type="Node" parent="Models"]
-
 [node name="Resources" type="Node" parent="."]
 script = ExtResource("5_yfsij")
