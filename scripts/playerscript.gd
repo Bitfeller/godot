@@ -1,11 +1,14 @@
 extends CharacterBody3D
 
+# GLOBAL VARIABLES
+@onready var resources = $"../../Resources";
+
 # PLAYER VARIABLES
 const IS_PLAYER = true
 
 const MAX_HEALTH = 100
 const HEAL_RATE = 0.01
-var health = MAX_HEALTH - 50
+var health = MAX_HEALTH
 
 const MAX_HUNGER = 100
 const HUNGER_RATE = 0.005
@@ -20,22 +23,110 @@ const SANITY_ROT = 0.001
 var sanity = MAX_SANITY
 
 const WALK_SPEED = 5.0
-const SPRINT_SPEED = 5.0
+const SPRINT_SPEED = 10.0
 
 const JUMP_VELOCITY = 4.5
 const CAMERA_ROT_SPEED = 0.001
+const CAMERA_MAX_Y_DEG = 70
+
+const HOTBAR_MAX = 5
+const INVENTORY_MAX = 25
+var hotbar = {}
+var inventory = {}
+var offhand
+
+# camera/player rot
+var camrot_x = 0
+var camrot_y = 0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-# camera/player rot
-var rot_x = 0
-var rot_y = 0
+# inventory functions
+func get_inventory() -> Dictionary:
+	return inventory
+func get_hotbar() -> Dictionary:
+	return hotbar
+func get_offhand():
+	return offhand
+func clear_inventory() -> bool:
+	inventory = {}
+	return true
+func clear_hotbar() -> bool:
+	hotbar = {}
+	return true
+func clear_offhand() -> bool:
+	offhand = null
+	return true
+func _add_item_to_dict(dict, item, amount, limit) -> bool:
+	if resources.Items[item]:
+		if dict[item]:
+			dict[item].amount += amount
+		else:
+			if dict.size() >= limit:
+				return false
+			dict[item] = {
+				"amount": amount
+			}
+	else:
+		return false
+	return true
+func add_to_inventory(item, amount) -> bool:
+	return _add_item_to_dict(inventory, item, amount, INVENTORY_MAX)
+func add_to_hotbar(item, amount) -> bool:
+	return _add_item_to_dict(hotbar, item, amount, HOTBAR_MAX)
+func add_to_offhand(item, amount) -> bool:
+	if resources.Items[item]:
+		if offhand == null:
+			offhand = {
+				"item": item,
+				"amount": amount
+			}
+		elif offhand.item == item:
+			offhand.amount += amount
+		else:
+			return false
+	else:
+		return false
+	return true
+func _remove_item_from_dict(dict, item, amount) -> bool:
+	if dict[item]:
+		if amount == "all":
+			dict.erase(item)
+		else:
+			dict[item].amount -= amount;
+			if dict[item].amount <= 0:
+				dict.erase(item)
+	else:
+		return false
+	return true
+func remove_from_inventory(item, amount) -> bool:
+	return _remove_item_from_dict(inventory, item, amount)
+func remove_from_hotbar(item, amount) -> bool:
+	return _remove_item_from_dict(hotbar, item, amount)
+func remove_from_offhand(amount) -> bool:
+	offhand.amount -= amount;
+	if offhand.amount <= 0:
+		offhand = null
+	return true
+func add_to_inv_sys(item, amount) -> bool:
+	if hotbar.size() < HOTBAR_MAX:
+		add_to_hotbar(item, amount)
+	elif inventory.size() < INVENTORY_MAX:
+		add_to_inventory(item, amount)
+	else:
+		return false
+	return true
+# CHEST 1 => 1 apple
+# Chestscript => remove 1 apple
+# Playerscript => hotbar full? yes => add_to_inventory(1 apple)
 
+
+# default functions
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-func _process(delta):
+func _process(_delta):
 	if health < MAX_HEALTH and hunger <= 0.1 * MAX_HUNGER:
 		health = min(MAX_HEALTH, health + HEAL_RATE)
 	if hunger < MAX_HUNGER:
@@ -52,11 +143,13 @@ func _process(delta):
 func _input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		# modify accumulated mouse rotation
-		rot_x -= event.relative.x * CAMERA_ROT_SPEED
-		rot_y -= event.relative.y * CAMERA_ROT_SPEED
+		camrot_x -= event.relative.x * CAMERA_ROT_SPEED
+		camrot_y -= event.relative.y * CAMERA_ROT_SPEED
 		transform.basis = Basis() # reset rotation
-		rotate_object_local(Vector3(0, 1, 0), rot_x) # first rotate in Y
-		rotate_object_local(Vector3(1, 0, 0), rot_y) # then rotate in X
+		$Camera3D.transform.basis = Basis() # reset rotation
+		rotate_y(camrot_x)
+		$Camera3D.rotate_x(camrot_y)
+		$Camera3D.rotation.x = clampf($Camera3D.rotation.x, -deg_to_rad(CAMERA_MAX_Y_DEG), deg_to_rad(CAMERA_MAX_Y_DEG))
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -81,3 +174,9 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
+	
+	for idx in get_slide_collision_count():
+		var coll = get_slide_collision(idx)
+		var body = coll.get_collider()
+		if body.get_parent().name == "barrels":
+			body.linear_velocity = direction * (500 if Input.is_action_pressed("Sprint") else 50)
