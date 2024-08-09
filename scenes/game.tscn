@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://uv106fnuygie"]
+[gd_scene load_steps=12 format=3 uid="uid://uv106fnuygie"]
 
 [ext_resource type="Script" path="res://scripts/Game Manager.gd" id="2_1e8ic"]
 [ext_resource type="PackedScene" uid="uid://cqdtoyx87f5yh" path="res://scenes/player.tscn" id="2_e5cbl"]
 [ext_resource type="PackedScene" uid="uid://b71utmvkkjuka" path="res://scenes/gui.tscn" id="2_lakh3"]
 [ext_resource type="PackedScene" uid="uid://dd1l0nuoxlfxe" path="res://scenes/kill_zone.tscn" id="4_11mjf"]
+[ext_resource type="Script" path="res://scripts/resources.gd" id="5_yfsij"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hx6ry"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -50,12 +51,12 @@ environment = SubResource("Environment_a2al5")
 [node name="Entities" type="Node" parent="."]
 
 [node name="Player" parent="Entities" instance=ExtResource("2_e5cbl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75864, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00800985, 1.75121, 0.0135818)
 
 [node name="Models" type="Node" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Models"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.241362, 0)
+transform = Transform3D(3.24509, 0, 0, 0, 1, 0, 0, 0, 3.50795, 0, -0.241362, 0)
 mesh = SubResource("BoxMesh_v1ch6")
 skeleton = NodePath("../..")
 
@@ -65,4 +66,9 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_hvjg2")
 
 [node name="Kill Zone" parent="Models" instance=ExtResource("4_11mjf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20667, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.949821, -0.831957, -3.68465)
+
+[node name="barrels" type="Node" parent="Models"]
+
+[node name="Resources" type="Node" parent="."]
+script = ExtResource("5_yfsij")
