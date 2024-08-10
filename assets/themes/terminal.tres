@@ -1,0 +1,82 @@
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://u4wyc7e1jltn"]
+
+[ext_resource type="FontFile" uid="uid://bon4hflq660ys" path="res://assets/fonts/modern_dos/ModernDOS9x16.ttf" id="1_6pwf3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xe2dh"]
+bg_color = Color(0.191527, 0.112564, 0.0500252, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kk5gb"]
+bg_color = Color(0.462745, 0.254902, 0.0313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q8ug7"]
+bg_color = Color(0.210455, 0.125469, 0.0581704, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k1cft"]
+bg_color = Color(0.239216, 0.145098, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icqf4"]
+bg_color = Color(0.462745, 0.254902, 0.0313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2pbw"]
+bg_color = Color(0.192157, 0.113725, 0.0509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyahn"]
+bg_color = Color(0.192157, 0.113725, 0.0509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wcgyg"]
+bg_color = Color(0.152509, 0.0866036, 0.0340728, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ew6t"]
+bg_color = Color(0.239216, 0.145098, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1el3n"]
+bg_color = Color(0.462745, 0.254902, 0.0313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8m3oa"]
+bg_color = Color(0.239216, 0.145098, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbx8b"]
+bg_color = Color(0.239216, 0.145098, 0.0705882, 1)
+
+[resource]
+Button/colors/font_color = Color(0.952941, 0.584314, 0.227451, 1)
+Button/colors/font_disabled_color = Color(0.462745, 0.254902, 0.0313726, 1)
+Button/colors/font_focus_color = Color(0.952941, 0.584314, 0.227451, 1)
+Button/colors/font_hover_color = Color(0.988235, 0.705882, 0.470588, 1)
+Button/colors/font_hover_pressed_color = Color(0.988235, 0.705882, 0.470588, 1)
+Button/colors/font_outline_color = Color(0.952941, 0.584314, 0.227451, 1)
+Button/colors/font_pressed_color = Color(0.952941, 0.584314, 0.227451, 1)
+Button/colors/icon_disabled_color = Color(0.462745, 0.254902, 0.0313726, 1)
+Button/colors/icon_focus_color = Color(0.952941, 0.584314, 0.227451, 1)
+Button/colors/icon_hover_color = Color(0.988235, 0.705882, 0.470588, 1)
+Button/colors/icon_hover_pressed_color = Color(0.988235, 0.705882, 0.470588, 1)
+Button/colors/icon_normal_color = Color(0.462745, 0.254902, 0.0313726, 1)
+Button/colors/icon_pressed_color = Color(0.462745, 0.254902, 0.0313726, 1)
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_6pwf3")
+Button/styles/disabled = SubResource("StyleBoxFlat_xe2dh")
+Button/styles/focus = SubResource("StyleBoxFlat_kk5gb")
+Button/styles/hover = SubResource("StyleBoxFlat_q8ug7")
+Button/styles/normal = SubResource("StyleBoxFlat_k1cft")
+Button/styles/pressed = SubResource("StyleBoxFlat_icqf4")
+Label/colors/font_color = Color(0.952941, 0.584314, 0.227451, 1)
+LineEdit/colors/font_color = Color(0.952941, 0.584314, 0.227451, 1)
+LineEdit/colors/font_uneditable_color = Color(0.462745, 0.254902, 0.0313726, 1)
+LineEdit/fonts/font = ExtResource("1_6pwf3")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_v2pbw")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_pyahn")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_wcgyg")
+ProgressBar/fonts/font = ExtResource("1_6pwf3")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_7ew6t")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_1el3n")
+TabBar/colors/drop_mark_color = Color(0.952941, 0.584314, 0.227451, 1)
+TabBar/colors/font_hovered_color = Color(0.952941, 0.584314, 0.227451, 1)
+TabBar/colors/font_selected_color = Color(0.952941, 0.584314, 0.227451, 1)
+TabBar/colors/font_unselected_color = Color(0.952941, 0.584314, 0.227451, 1)
+TabContainer/colors/drop_mark_color = Color(0.952941, 0.584314, 0.227451, 1)
+TabContainer/colors/font_disabled_color = Color(0.462745, 0.254902, 0.0313726, 1)
+TabContainer/colors/font_hovered_color = Color(0.988235, 0.705882, 0.470588, 1)
+TabContainer/colors/font_selected_color = Color(0.952941, 0.584314, 0.227451, 1)
+TextEdit/colors/font_color = Color(0.952941, 0.584314, 0.227451, 1)
+VSlider/styles/grabber_area = SubResource("StyleBoxFlat_8m3oa")
+VSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_lbx8b")

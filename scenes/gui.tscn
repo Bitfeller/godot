@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b71utmvkkjuka"]
 
-[ext_resource type="Texture2D" uid="uid://qonvomv1xq3c" path="res://assets/eye.svg" id="1_5nupk"]
 [ext_resource type="Script" path="res://scripts/GUIscript.gd" id="1_21rjd"]
+[ext_resource type="Texture2D" uid="uid://qonvomv1xq3c" path="res://assets/images/eye.svg" id="2_mai3b"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t1juo"]
 
@@ -107,4 +107,4 @@ anchor_bottom = 1.0
 offset_top = -24.0
 offset_right = 24.0
 grow_vertical = 0
-texture = ExtResource("1_5nupk")
+texture = ExtResource("2_mai3b")

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qonvomv1xq3c"
-path="res://.godot/imported/eye.svg-576c3ad2d1261beb31428f409f7ecf5d.ctex"
+path="res://.godot/imported/eye.svg-0b82e0fcfed4c0a19cb38fc0a7573470.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/eye.svg"
-dest_files=["res://.godot/imported/eye.svg-576c3ad2d1261beb31428f409f7ecf5d.ctex"]
+source_file="res://assets/images/eye.svg"
+dest_files=["res://.godot/imported/eye.svg-0b82e0fcfed4c0a19cb38fc0a7573470.ctex"]
 
 [params]
 

@@ -32,7 +32,7 @@ data = PackedVector3Array(-10, 0.25, 10, 10, 0.25, 10, -10, -0.25, 10, 10, 0.25,
 
 [node name="Game" type="Node3D"]
 
-[node name="GUI" parent="." instance=ExtResource("2_lakh3")]
+[node name="HUD" parent="." instance=ExtResource("2_lakh3")]
 
 [node name="Game Manager" type="Node" parent="."]
 unique_name_in_owner = true
