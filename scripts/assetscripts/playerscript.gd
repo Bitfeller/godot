@@ -1,7 +1,4 @@
-extends CharacterBody3D
-
-# GLOBAL VARIABLES
-@onready var resources = $"../../Resources";
+class_name PlayerBody extends CharacterBody3D
 
 # PLAYER VARIABLES
 const IS_PLAYER = true
@@ -49,82 +46,148 @@ func get_hotbar() -> Dictionary:
 	return hotbar
 func get_offhand():
 	return offhand
+
 func clear_inventory() -> bool:
-	inventory = {}
+	for slot in inventory.keys():
+		inventory[slot] = null
 	return true
 func clear_hotbar() -> bool:
-	hotbar = {}
+	for slot in hotbar.keys():
+		hotbar[slot] = null
 	return true
 func clear_offhand() -> bool:
 	offhand = null
 	return true
-func _add_item_to_dict(dict, item, amount, limit) -> bool:
-	if resources.Items[item]:
-		if dict[item]:
-			dict[item].amount += amount
-		else:
-			if dict.size() >= limit:
-				return false
-			dict[item] = {
-				"amount": amount
+
+func _add_item_to_dict(dict, item, num, limit, slotnum = null) -> bool:
+	if Resources.Items[item]:
+		# slotnum
+		if slotnum:
+			if dict[slotnum] and dict[slotnum].name == item:
+				dict[slotnum].num += num
+			elif dict[slotnum] == null:
+				dict[slotnum] = {
+					"name": item,
+					"num": num
+				}
+			# overflow
+			var overflow = dict[slotnum].num - Resources.Items[item].max_stack
+			if overflow > 0:
+				return add_to_inv_sys(item, overflow)
+			return true
+		var idx
+		var firstNull
+		for slot in dict.keys():
+			if dict[slot] == null:
+				firstNull = slot
+			if dict[slot].name == item:
+				idx = slot
+				dict[slot].num += num
+				break
+		if not idx:
+			if not firstNull:
+				return false # full
+			idx = firstNull
+			dict[firstNull] = {
+				"name": item,
+				"num": num
 			}
+		# overflow
+		var overflow = dict[idx].num - Resources.Items[item].max_stack
+		if overflow > 0:
+			return add_to_inv_sys(item, overflow)
 	else:
 		return false
 	return true
-func add_to_inventory(item, amount) -> bool:
-	return _add_item_to_dict(inventory, item, amount, INVENTORY_MAX)
-func add_to_hotbar(item, amount) -> bool:
-	return _add_item_to_dict(hotbar, item, amount, HOTBAR_MAX)
-func add_to_offhand(item, amount) -> bool:
-	if resources.Items[item]:
+func add_to_inventory(item, num, slot = null) -> bool:
+	return _add_item_to_dict(inventory, item, num, INVENTORY_MAX, slot)
+func add_to_hotbar(item, num, slot = null) -> bool:
+	return _add_item_to_dict(hotbar, item, num, HOTBAR_MAX, slot)
+func add_to_offhand(item, num) -> bool:
+	if Resources.Items[item]:
 		if offhand == null:
 			offhand = {
-				"item": item,
-				"amount": amount
+				"name": item,
+				"num": num
 			}
 		elif offhand.item == item:
-			offhand.amount += amount
+			offhand.num += num
 		else:
 			return false
+		# overflow
+		var overflow = offhand.num - Resources.Items[item].max_stack
+		if overflow > 0:
+			return add_to_inv_sys(item, overflow)
 	else:
 		return false
 	return true
-func _remove_item_from_dict(dict, item, amount) -> bool:
-	if dict[item]:
-		if amount == "all":
-			dict.erase(item)
+
+func _remove_item_from_dict(dict, item, num, slotnum = null) -> bool:
+	# slotnum handle
+	if slotnum:
+		if dict[slotnum] and dict[slotnum].name == item:
+			if num == "all":
+				dict[slotnum] = null
+			else:
+				dict[slotnum].num -= num
+				if dict[slotnum].num <= 0:
+					dict[slotnum] = null
+			return true
 		else:
-			dict[item].amount -= amount;
-			if dict[item].amount <= 0:
-				dict.erase(item)
-	else:
+			return false
+	for slot in dict:
+		if dict[slot].name == item:
+			if num == "all":
+				dict[slot] = null
+			else:
+				dict[slot].num -= num
+				if dict[slot].num <= 0:
+					dict[slot] = null
+			return true
+	return false
+func remove_from_inventory(item, num, slot = null) -> bool:
+	return _remove_item_from_dict(inventory, item, num, slot)
+func remove_from_hotbar(item, num, slot = null) -> bool:
+	return _remove_item_from_dict(hotbar, item, num, slot)
+func remove_from_offhand(num) -> bool:
+	if offhand == null:
 		return false
-	return true
-func remove_from_inventory(item, amount) -> bool:
-	return _remove_item_from_dict(inventory, item, amount)
-func remove_from_hotbar(item, amount) -> bool:
-	return _remove_item_from_dict(hotbar, item, amount)
-func remove_from_offhand(amount) -> bool:
-	offhand.amount -= amount;
-	if offhand.amount <= 0:
+	offhand.num -= num;
+	if offhand.num <= 0:
 		offhand = null
 	return true
-func add_to_inv_sys(item, amount) -> bool:
-	if hotbar.size() < HOTBAR_MAX:
-		add_to_hotbar(item, amount)
-	elif inventory.size() < INVENTORY_MAX:
-		add_to_inventory(item, amount)
-	else:
+
+func add_to_inv_sys(item, num) -> bool:
+	var success = add_to_hotbar(item, num)
+	if not success:
+		success = add_to_inventory(item, num)
+	if not success:
 		return false
 	return true
-# CHEST 1 => 1 apple
-# Chestscript => remove 1 apple
-# Playerscript => hotbar full? yes => add_to_inventory(1 apple)
 
+func find_item(item : String) -> Array:
+	if offhand.name == item:
+		return ["offhand", 0, offhand]
+	for slot in hotbar:
+		if hotbar[slot].name == item:
+			return ["hotbar", slot, hotbar[slot]]
+	for slot in inventory:
+		if inventory[slot].name == item:
+			return ["inventory", slot, inventory[slot]]
+	return [false]
+func selective_find_item(location : Dictionary, item : String) -> Array:
+	for slot in location:
+		if location[slot].name == item:
+			return [slot, location[slot]]
+	return [false]
 
 # default functions
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# define slots into hotbar and inventory
+	for i in range(HOTBAR_MAX):
+		hotbar[str(i)] = {}
+	for i in range(INVENTORY_MAX):
+		inventory[str(i)] = {}
 	
 func _process(_delta):
 	if health < MAX_HEALTH and hunger <= 0.1 * MAX_HUNGER:

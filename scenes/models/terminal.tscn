@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbbgow0vuoj2t"]
+
+[ext_resource type="ArrayMesh" uid="uid://bqloudi8vkkjg" path="res://assets/models/terminal.obj" id="1_s3jy7"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0xxqo"]
+points = PackedVector3Array(8.4392, 22.5592, 4.93012, -7.44638, -1.08448, -5.0465, -7.5608, -1.25478, 4.93012, -7.5608, 22.5592, 4.93012, 8.4392, -1.25478, 4.93012, 8.32478, 22.3889, -5.0465, 8.32478, -1.08448, -5.0465, -7.44638, 22.3889, -5.0465)
+
+[node name="Terminal" type="RigidBody3D"]
+mass = 0.01
+
+[node name="Terminal" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, 0, 0, 0)
+mesh = ExtResource("1_s3jy7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.115, 0, 0, 0, 0.115, 0, 0, 0, 0.115, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_0xxqo")
