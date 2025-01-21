@@ -1,4 +1,5 @@
-# godot
-the game
-made by Valley, Bitfeller, and J1ggle
+# godot game
+A miscellaneous game designed by bitfeller, Valley, and j1ggle.
+
+
 しずしず。。。
