@@ -152,7 +152,7 @@ func remove_from_hotbar(item, num, slot = null) -> bool:
 func remove_from_offhand(num) -> bool:
 	if offhand == null:
 		return false
-	offhand.num -= num;
+	offhand.num -= num
 	if offhand.num <= 0:
 		offhand = null
 	return true
